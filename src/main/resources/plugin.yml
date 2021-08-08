@@ -1,0 +1,9 @@
+name: RefinedSkyblockAPI
+version: ${project.version}
+main: space.maxus.refsb.RefSbAPI
+api-version: 1.17.1
+prefix: RSB API
+authors: [ maxus ]
+description: Main API for Refined Skyblock
+website: https://maxus.space
+depend: [ NBTAPI ]
