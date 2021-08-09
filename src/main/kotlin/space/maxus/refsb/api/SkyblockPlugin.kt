@@ -18,6 +18,11 @@ abstract class SkyblockPlugin : JavaPlugin() {
      */
     var items : Enum<*>? = null
 
+    /**
+     * All entities that should be registered inside your plugin. Only used for convenience
+     */
+    var entities : Enum<*>? = null
+
     final override fun onEnable() {
         enable()
         CommandRegisterer(this)

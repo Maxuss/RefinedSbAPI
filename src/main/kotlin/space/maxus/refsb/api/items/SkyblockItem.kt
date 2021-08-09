@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.apache.commons.lang.StringUtils.capitalize
 import org.bukkit.ChatColor
-import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.reflections.ReflectionUtils
 import space.maxus.refsb.RefinedAPI

@@ -12,6 +12,7 @@ class InteractListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onInteract(e: PlayerInteractEvent) {
         val item = e.item ?: return
+        if(item.type.isEmpty) return
         val nbt = NBTItem(item)
         if(nbt.hasKey("skyblockData")) {
             val event = SkyblockInteractEvent(item, nbt.getCompound("skyblockData").getString("id"), e.action, e)

@@ -42,6 +42,14 @@ public class TextUtils {
         return comp.decoration(TextDecoration.ITALIC, false);
     }
     @NotNull
+    public static Component legacySection(String legacy) {
+        Component comp = LegacyComponentSerializer.legacySection().deserialize(legacy);
+        return comp.decoration(TextDecoration.ITALIC, false);
+    }
+    /**
+     * Makes the component without italics
+     */
+    @NotNull
     @Contract(pure = true)
     public static Component noItalic(@NotNull Component in) {
         return in.decoration(TextDecoration.ITALIC, false);

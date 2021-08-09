@@ -1,6 +1,5 @@
 package space.maxus.refsb.api.commands
 
-import net.kyori.adventure.text.TextComponent
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender

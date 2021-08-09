@@ -7,6 +7,9 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
+/**
+ * This event is called when player interacts with skyblock item in main hand
+ */
 class SkyblockInteractEvent(
         val item: ItemStack,
         val itemId: String,
