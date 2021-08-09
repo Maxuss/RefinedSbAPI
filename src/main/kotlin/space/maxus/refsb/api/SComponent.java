@@ -19,6 +19,11 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.3
  */
 public interface SComponent extends Component {
+    /**
+     * Get text representation component
+     * @param text text that should be included
+     * @return generated component
+     */
     @NotNull
     static TextComponent text(String text) {
         return Component.text(text).decoration(TextDecoration.ITALIC, false);

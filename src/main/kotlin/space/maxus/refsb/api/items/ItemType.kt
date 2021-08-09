@@ -1,5 +1,8 @@
 package space.maxus.refsb.api.items
 
+/**
+ * This class represents type of item
+ */
 enum class ItemType(
     val display: String,
     val isReforgeable: Boolean,

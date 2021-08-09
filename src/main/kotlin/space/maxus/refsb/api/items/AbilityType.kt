@@ -2,6 +2,9 @@ package space.maxus.refsb.api.items
 
 import org.bukkit.ChatColor
 
+/**
+ * Enum representing all types for item abilities.
+ */
 enum class AbilityType(shown: String) {
     PASSIVE           ("${ChatColor.GOLD.toString()} Item Ability: %NAME%"),
     RIGHT_CLICK       ("${ChatColor.GOLD.toString()} Item Ability: %NAME% "+ChatColor.YELLOW+""+ChatColor.BOLD+"RIGHT CLICK"),

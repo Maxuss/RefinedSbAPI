@@ -17,15 +17,30 @@ import java.lang.reflect.Modifier
 import java.util.*
 import java.util.function.Consumer
 
-
+/**
+ * This class should be inherited to create custom items
+ */
 abstract class SkyblockItem : SkyblockFeature {
+    /**
+     * Gets the configuration for item
+     */
     abstract fun getConfig() : ItemConfiguration
+
+    /**
+     * Gets ID of item in format 'EXAMPLE_ITEM'
+     */
     abstract override fun getId() : String
 
+    /**
+     * Called after initializing base of item
+     */
     open fun postInit(base: ItemStack) { }
 
     private lateinit var item : ItemStack
 
+    /**
+     * Compiles the item into ItemStack
+     */
     fun generate(): ItemStack {
         item = ItemStack(getConfig().origin)
         return inheritanceGeneration(item)
@@ -107,10 +122,19 @@ abstract class SkyblockItem : SkyblockFeature {
         return item
     }
 
+    /**
+     * Static data for the item
+     */
     companion object Static {
+        /**
+         * Recombobulates item, upgrading it's rarity by 1
+         */
         fun recombobulate(item: ItemStack): ItemStack {
             val m = item.itemMeta!!
-            val it = NBTItem(item)
+            var it = NBTItem(item)
+            if(!it.hasKey("skyblockData"))
+                it = NBTItem(convertToSkyblock(item))
+
             var comp = it.getOrCreateCompound("skyblockData")
             if (comp.hasKey("recombobulated")) return item
             if (comp.hasKey("rarity")) {
@@ -139,6 +163,9 @@ abstract class SkyblockItem : SkyblockFeature {
             return item
         }
 
+        /**
+         * Converts vanilla native item into skyblock native item
+         */
         fun convertToSkyblock(i: ItemStack): ItemStack {
             ItemHelper.getExtraStats(i)
             val m = i.itemMeta!!

@@ -3,7 +3,9 @@ package space.maxus.refsb.api.items
 import org.bukkit.ChatColor
 import space.maxus.refsb.api.SkyblockConstants
 
-
+/**
+ * Represents ability of item
+ */
 class ItemAbility(var name: String?, t: AbilityType?, descr: List<String?>?) {
     var type: AbilityType? = t
     var description: List<String?>? = descr

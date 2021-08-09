@@ -3,7 +3,10 @@ package space.maxus.refsb.api
 import de.tr7zw.changeme.nbtapi.NBTItem
 import org.bukkit.inventory.ItemStack
 
-interface SkyblockFeature {
+/**
+ * This interface
+ */
+internal interface SkyblockFeature {
     fun getId() : String
 
     fun addSkyblockTag(item : ItemStack) : ItemStack {

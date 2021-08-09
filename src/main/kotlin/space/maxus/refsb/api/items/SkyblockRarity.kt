@@ -2,7 +2,9 @@ package space.maxus.refsb.api.items
 
 import org.bukkit.ChatColor
 
-
+/**
+ * Enum representing rarity of item
+ */
 enum class SkyblockRarity(display: String, color: ChatColor, val index: Int) {
     ERROR(ChatColor.MAGIC.toString() + "ERROR", ChatColor.YELLOW, 0),
 

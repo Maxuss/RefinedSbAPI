@@ -8,7 +8,14 @@ import space.maxus.refsb.api.commands.CommandRegisterer
  * Main class used for inheritance with skyblock related plugins
  */
 abstract class SkyblockPlugin : JavaPlugin() {
+    /**
+     * All commands that will be registered inside your plugin
+     */
     var commands : MutableList<ChatCommand> = mutableListOf()
+
+    /**
+     * All items that should be registered inside your plugin. Only used for convenience
+     */
     var items : Enum<*>? = null
 
     final override fun onEnable() {
@@ -20,10 +27,16 @@ abstract class SkyblockPlugin : JavaPlugin() {
         disable()
     }
 
+    /**
+     * This function is called upon enabling the plugin
+     */
     open fun enable() {
 
     }
 
+    /**
+     * This function is called upon disabling the plugin
+     */
     open fun disable() {
 
     }

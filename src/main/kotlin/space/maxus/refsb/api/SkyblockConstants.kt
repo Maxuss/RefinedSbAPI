@@ -1,5 +1,8 @@
 package space.maxus.refsb.api
 
+/**
+ * This class contains all symbols from original skyblock that might be useful
+ */
 object SkyblockConstants {
 
     // migrated from SkyblockD

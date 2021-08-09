@@ -1,5 +1,7 @@
 package space.maxus.refsb.util;
 
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,7 +17,14 @@ import space.maxus.refsb.api.items.SkyblockRarity;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This is an utility class for item related manipulations
+ */
 public class ItemHelper {
+    /**
+     * Hides all flags in item meta
+     * @param m item meta to be affected
+     */
     public static void hideAllFlags(ItemMeta m) {
         m.addItemFlags(
                 ItemFlag.HIDE_ATTRIBUTES,
@@ -28,39 +37,53 @@ public class ItemHelper {
         );
     }
 
+    /**
+     * Hides all flags for item
+     * @param in item to be affected
+     */
     public static void hideAllFlags(ItemStack in) {
         ItemMeta m = in.getItemMeta();
         hideAllFlags(m);
         in.setItemMeta(m);
     }
 
+    /**
+     * Gets skyblock stats from vanilla-native item
+     * @param base item to be affected
+     */
     public static void getExtraStats(@NotNull ItemStack base) {
         if(!base.hasItemMeta()) return;
         assert base.getItemMeta() != null;
 
         if(base.getType().isBlock()) return;
         ItemMeta m = base.getItemMeta();
+        NBTItem nbt = new NBTItem(base);
+        NBTCompound comp = nbt.getOrCreateCompound("skyblockData");
         HashMap<String, Integer> statValues = new HashMap<>();
         if(m.getAttributeModifiers(Attribute.GENERIC_ATTACK_DAMAGE) != null) {
             int amount = (int) Math.round(new ArrayList<>(Objects.requireNonNull(m.getAttributeModifiers(Attribute.GENERIC_ATTACK_DAMAGE))).get(0).getAmount());
             statValues.put(ChatColor.GRAY+"Damage: "+ ChatColor.RED, amount);
             m.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+            comp.setInteger("damage", amount);
         }
         if(m.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED) != null) {
             int amount = (int) Math.round(new ArrayList<>(Objects.requireNonNull(m.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED))).get(0).getAmount());
             statValues.put(ChatColor.GRAY+"Bonus Attack Speed: "+ChatColor.RED, amount);
             m.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+            comp.setInteger("attackSpeed", amount);
         }
         statValues.put(" ",0);
         if(m.getAttributeModifiers(Attribute.GENERIC_ARMOR) != null) {
             int amount = (int) Math.round(new ArrayList<>(Objects.requireNonNull(m.getAttributeModifiers(Attribute.GENERIC_ARMOR))).get(0).getAmount());
             statValues.put(ChatColor.GRAY+"Defence: "+ChatColor.GREEN, amount);
             m.removeAttributeModifier(Attribute.GENERIC_ARMOR);
+            comp.setInteger("defence", amount);
         }
         if(m.getAttributeModifiers(Attribute.GENERIC_MOVEMENT_SPEED) != null) {
             int amount = (int) Math.round(new ArrayList<>(Objects.requireNonNull(m.getAttributeModifiers(Attribute.GENERIC_MOVEMENT_SPEED))).get(0).getAmount());
             statValues.put(ChatColor.GRAY+"Speed: "+ChatColor.GREEN, amount);
             m.removeAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED);
+            comp.setInteger("speed", amount);
         }
         List<String> lore = new ArrayList<>();
         for (Map.Entry<String, Integer> entry: statValues.entrySet()) {

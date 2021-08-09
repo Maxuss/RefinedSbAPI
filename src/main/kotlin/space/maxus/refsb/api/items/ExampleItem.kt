@@ -7,7 +7,7 @@ import org.bukkit.Material
 import space.maxus.refsb.api.SComponent
 import space.maxus.refsb.util.TextUtils.noItalic
 
-class ExampleItem : SkyblockItem() {
+internal class ExampleItem : SkyblockItem() {
     override fun getConfig(): ItemConfiguration {
         return ItemConfiguration(
             Component.text("").color(TextColor.color(225, 66, 31 ))
