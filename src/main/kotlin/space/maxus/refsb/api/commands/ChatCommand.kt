@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
-import space.maxus.refsb.RefSbAPI
+import space.maxus.refsb.RefinedAPI
 import space.maxus.refsb.util.TextUtils
 
 /**
@@ -18,7 +18,7 @@ import space.maxus.refsb.util.TextUtils
  */
 abstract class ChatCommand : CommandExecutor, TabCompleter {
     var commandInfo : CommandInfo =
-        this::class.java.getAnnotation(CommandInfo::class.java);
+        this::class.java.getAnnotation(CommandInfo::class.java)
 
     final override fun onCommand(
         sender: CommandSender,
@@ -26,28 +26,28 @@ abstract class ChatCommand : CommandExecutor, TabCompleter {
         data: String,
         args: Array<out String>): Boolean {
         if(commandInfo.configRequirement.isNotEmpty() &&
-            !RefSbAPI
+            !RefinedAPI
                 .getInstance()
                 .config.getBoolean(commandInfo.configRequirement)) {
-            val comp : TextComponent = TextUtils.legacy("&cThis command is disabled on your server!")
-            sender.sendMessage(comp);
+            val comp = TextUtils.legacy("&cThis command is disabled on your server!")
+            sender.sendMessage(comp)
             return true
         }
 
         if(commandInfo.playerOnly && sender !is Player) {
-            val comp : TextComponent = TextUtils.legacy("&cThis command is only for players!")
+            val comp = TextUtils.legacy("&cThis command is only for players!")
             sender.sendMessage(comp)
             return true
         }
 
         if(commandInfo.permission.isNotEmpty() &&
                 !sender.hasPermission(commandInfo.permission)) {
-            val comp : TextComponent = TextUtils.legacy("&cYou don't have sufficient permissions to execute this command!")
+            val comp = TextUtils.legacy("&cYou don't have sufficient permissions to execute this command!")
             sender.sendMessage(comp)
             return true
         }
 
-        if(commandInfo.playerOnly) return execute(sender as Player, args);
+        if(commandInfo.playerOnly) return execute(sender as Player, args)
         return execute(sender, args)
     }
 
@@ -57,7 +57,7 @@ abstract class ChatCommand : CommandExecutor, TabCompleter {
         data: String,
         args: Array<out String>
     ): MutableList<String> {
-        return tabComplete(sender, args);
+        return tabComplete(sender, args)
     }
 
     /**

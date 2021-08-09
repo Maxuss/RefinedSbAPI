@@ -1,1 +1,5 @@
 # Main Configuration file for Refined Skyblock API
+
+# Will example commands be included in plugin?
+show-examples: true
+# You might want this off!

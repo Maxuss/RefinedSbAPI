@@ -9,10 +9,11 @@ import space.maxus.refsb.api.commands.CommandRegisterer
  */
 abstract class SkyblockPlugin : JavaPlugin() {
     var commands : MutableList<ChatCommand> = mutableListOf()
+    var items : Enum<*>? = null
 
     final override fun onEnable() {
-        CommandRegisterer(this)
         enable()
+        CommandRegisterer(this)
     }
 
     final override fun onDisable() {
