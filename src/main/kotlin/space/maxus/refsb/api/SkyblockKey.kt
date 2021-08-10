@@ -9,4 +9,8 @@ class SkyblockKey internal constructor(val owner: SkyblockPlugin, override val k
     override fun namespaced() : NamespacedKey {
         return NamespacedKey(owner, key)
     }
+
+    override fun toString(): String {
+        return full
+    }
 }
