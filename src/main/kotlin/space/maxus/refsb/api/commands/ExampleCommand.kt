@@ -5,11 +5,14 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.java.JavaPlugin
+import space.maxus.refsb.api.SkyblockPlugin
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 @CommandInfo(name = "example", playerOnly = true)
-internal class ExampleCommand : ChatCommand() {
+internal class ExampleCommand(instance: JavaPlugin) : ChatCommand(instance) {
     override fun execute(player: Player, args: Array<out String>): Boolean {
         val it = player.inventory.itemInMainHand
         if(it.type == Material.AIR) {

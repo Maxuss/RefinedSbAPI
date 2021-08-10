@@ -3,12 +3,13 @@ package space.maxus.refsb.api.listeners
 import de.tr7zw.changeme.nbtapi.NBTItem
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
-import org.bukkit.entity.Player
+import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import space.maxus.refsb.api.Key
+import space.maxus.refsb.RefinedAPI
 import space.maxus.refsb.api.SkyblockPlugin
 import space.maxus.refsb.api.craft.*
 import space.maxus.refsb.util.TextUtils
@@ -20,12 +21,40 @@ class InventoryListener : Listener {
         val name = ChatColor.stripColor(TextUtils.toLegacy(e.view.title()))
 
         if(name?.lowercase().equals("crafting table")) {
+            val cur = e.currentItem
+            val indexx = inv.indexOf(cur)
+            if(indexx == 23 && cur != null && !cur.type.isEmpty) {
+                val air = ItemStack(Material.AIR)
+                for(i in 10..12) {
+                    inv.setItem(i, air)
+                }
+                for(i in 19..21) {
+                    inv.setItem(i, air)
+                }
+                for(i in 28..30) {
+                    inv.setItem(i, air)
+                }
+            }
+            if(cur?.type == Material.GRAY_STAINED_GLASS_PANE
+                || cur?.type == Material.ARROW
+                || cur?.type == Material.RED_STAINED_GLASS_PANE)
+                    e.isCancelled = true
+            if(cur?.hasItemMeta() == true
+                && ChatColor.stripColor(TextUtils.toLegacy(cur.itemMeta?.displayName()))?.contains("Close") == true
+            ) {
+                e.whoClicked.closeInventory(InventoryCloseEvent.Reason.PLUGIN)
+            }
+
             val recipes: MutableList<Recipe> = mutableListOf()
+
+            val logger = RefinedAPI.INSTANCE.logger
 
             for(plugin in Bukkit.getPluginManager().plugins) {
                 val depends = plugin.description.depend
+                logger.info("Found a plugin "+plugin.name+", checking it's dependencies...")
                 if(depends.contains("RefinedSkyblockAPI")) {
                     val sb = plugin as SkyblockPlugin
+                    logger.info("Plugin "+sb.name+" is Skyblock Plugin!")
                     recipes.addAll(sb.recipeManager.registeredRecipes.values)
                 }
             }
@@ -37,6 +66,7 @@ class InventoryListener : Listener {
             )
 
             for(recipe in recipes) {
+                logger.info("Proccessing recipe for item ${TextUtils.toLegacy(recipe.result.displayName())}")
                 val matrix = recipe.rows
                 val choices = recipe.choiceMap
                 val charray : MutableList<MutableList<Char>> = mutableListOf()
@@ -54,7 +84,7 @@ class InventoryListener : Listener {
                     val tmp = mutableListOf<RecipeChoice<*>?>()
                     for(ch in char) {
                         val x = char.indexOf(ch)
-
+                        logger.info("Current choice: ${choices[ch]}")
                         tmp[x] = choices[ch]
                     }
                     choiceArray[ind] = tmp
@@ -66,6 +96,8 @@ class InventoryListener : Listener {
                     mutableListOf()
                 )
 
+                logger.info("Starting to process contents")
+
                 for(row in contents) {
                     val index = contents.indexOf(row)
                     val choiceRow = choiceArray[index]
@@ -75,19 +107,25 @@ class InventoryListener : Listener {
                         val choice = choiceRow?.get(i) ?: continue
                         if(choice is KeyedChoice) {
                             val key = choice.key
+                            logger.info("Choice is keyed! Key: ${key.full}")
                             val id = key.key.uppercase()
                             val nbt = NBTItem(itemc)
                             if(!nbt.hasKey("skyblockData")) continue
+                            logger.info("Current item has skyblock id!")
                             val sbid = nbt.getCompound("skyblockData").getString("id")
+                            logger.info("Similar? "+(sbid.uppercase()==id))
                             matches[index][i] = sbid.uppercase() == id
                         } else {
+                            logger.info("Choice is item related!")
                             val comparable = choice.getItem()
+                            logger.info("Similar? "+ comparable.isSimilar(itemc))
                             matches[index][i] = comparable.isSimilar(itemc)
                         }
                     }
                 }
 
                 if(matches.all { bool -> bool.all { boole -> boole == true } }) {
+                    logger.info("Total match!")
                     val result = recipe.result
                     inv.setItem(23, result)
                     return

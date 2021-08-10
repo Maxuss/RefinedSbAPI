@@ -5,19 +5,28 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.java.JavaPlugin
 import space.maxus.refsb.RefinedAPI
+import space.maxus.refsb.api.SkyblockPlugin
 import space.maxus.refsb.util.TextUtils
 
 /**
- * This abstract class is used for creating
- * simple chat commands. All commands should
- * be registered by yourself. All classes extending
- * this class should have CommandInfo annotation!
+ * This abstract class is used for creating <br/>
+ * simple chat commands. All commands should <br/>
+ * be registered by yourself. All classes extending <br/>
+ * this class should have CommandInfo annotation! <br/>
  * @see CommandInfo
  */
-abstract class ChatCommand : CommandExecutor, TabCompleter {
-    var commandInfo : CommandInfo =
+@Suppress("LeakingThis")
+abstract class ChatCommand(instance: JavaPlugin) : CommandExecutor, TabCompleter {
+    val commandInfo : CommandInfo =
         this::class.java.getAnnotation(CommandInfo::class.java)
+
+    init {
+        instance.getCommand(commandInfo.name)?.setExecutor(this)
+        instance.getCommand(commandInfo.name)?.setTabCompleter(this)
+    }
 
     final override fun onCommand(
         sender: CommandSender,

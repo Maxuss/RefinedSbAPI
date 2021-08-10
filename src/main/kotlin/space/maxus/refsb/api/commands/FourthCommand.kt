@@ -3,13 +3,13 @@ package space.maxus.refsb.api.commands
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import space.maxus.refsb.api.SkyblockPlugin
-import space.maxus.refsb.api.entities.ExampleEntity
+import space.maxus.refsb.api.craft.CraftingInventory
 
-@CommandInfo("third", playerOnly = true)
-class ThirdCommand(instance: JavaPlugin) : ChatCommand(instance) {
+@CommandInfo(name = "fourth", playerOnly = true)
+class FourthCommand(instance: JavaPlugin) : ChatCommand(instance) {
     override fun execute(player: Player, args: Array<out String>): Boolean {
-        val entity = ExampleEntity()
-        entity.generate(player)
+        val inv = CraftingInventory().generate(player)
+        player.openInventory(inv)
         return true
     }
 }

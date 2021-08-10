@@ -14,3 +14,5 @@ commands:
     description: Another example command
   third:
     description: Third example command
+  fourth:
+    description: Fourth example command
