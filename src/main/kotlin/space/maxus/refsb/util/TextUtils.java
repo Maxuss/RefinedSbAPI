@@ -41,10 +41,24 @@ public class TextUtils {
         Component comp = LegacyComponentSerializer.legacyAmpersand().deserialize(legacy);
         return comp.decoration(TextDecoration.ITALIC, false);
     }
+
+    /**
+     * Deserialize legacy string to component
+     * @param legacy text with sections as color codes
+     */
     @NotNull
     public static Component legacySection(String legacy) {
         Component comp = LegacyComponentSerializer.legacySection().deserialize(legacy);
         return comp.decoration(TextDecoration.ITALIC, false);
+    }
+
+    /**
+     * Serialize component into legacy string
+     * @param comp the component
+     */
+    @NotNull
+    public static String toLegacy(Component comp) {
+        return LegacyComponentSerializer.legacySection().serialize(comp);
     }
     /**
      * Makes the component without italics

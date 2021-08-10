@@ -57,13 +57,13 @@ abstract class SkyblockPlugin : JavaPlugin() {
      * This function is called upon enabling the plugin
      */
     open fun enable() {
-
+        // Should be used by plugins on enable
     }
 
     /**
      * This function is called upon disabling the plugin
      */
     open fun disable() {
-
+        // Should be used by plugins on enable
     }
 }

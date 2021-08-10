@@ -99,7 +99,7 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-test-junit</artifactId>
-      <version>1.5.20</version>
+      <version>1.5.21</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -115,7 +115,7 @@
   </dependencies>
   <properties>
     <maven.compiler.target>16</maven.compiler.target>
-    <kotlin.version>1.5.20</kotlin.version>
+    <kotlin.version>1.5.21</kotlin.version>
     <maven.compiler.source>16</maven.compiler.source>
     <project.version>0.1</project.version>
   </properties>

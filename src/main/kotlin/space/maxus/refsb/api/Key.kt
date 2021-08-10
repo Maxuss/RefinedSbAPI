@@ -2,6 +2,7 @@ package space.maxus.refsb.api
 
 import org.apache.commons.lang.Validate
 import org.bukkit.NamespacedKey
+import org.bukkit.plugin.Plugin
 import org.jetbrains.annotations.NotNull
 import java.util.function.Predicate
 
@@ -90,6 +91,13 @@ interface Key : Cloneable, Predicate<Key> {
         fun fromNamespaced(@NotNull key: NamespacedKey) : Key {
             Validate.notNull(key, "Key can not be null!")
             return SimpleKey(key.namespace, key.key)
+        }
+
+        /**
+         * Creates new namespaced key
+         */
+        fun namespaced(plugin: Plugin, key: String) : NamespacedKey {
+            return NamespacedKey(plugin, key)
         }
     }
 }

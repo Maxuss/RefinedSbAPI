@@ -1,5 +1,6 @@
 package space.maxus.refsb.api.commands
 
+import de.tr7zw.changeme.nbtapi.NBTItem
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Material
@@ -16,7 +17,7 @@ internal class ExampleCommand : ChatCommand() {
                 Component.text("You don't hold any items!")))
             return true
         }
-        val stringed = it.toString()
+        val stringed = NBTItem(it).toString()
         val selection = StringSelection(stringed)
         val clip = Toolkit.getDefaultToolkit().systemClipboard
         clip.setContents(selection, selection)

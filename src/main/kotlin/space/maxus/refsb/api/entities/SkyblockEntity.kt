@@ -8,6 +8,9 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.inventory.EntityEquipment
+import org.bukkit.persistence.PersistentDataType
+import space.maxus.refsb.RefinedAPI
+import space.maxus.refsb.api.Key
 import space.maxus.refsb.api.SkyblockConstants
 import space.maxus.refsb.util.TextUtils
 
@@ -29,7 +32,7 @@ abstract class SkyblockEntity {
      * This function is called after initializng base entity
      */
     open fun postInit(entity: LivingEntity?, base: Entity?) {
-
+        // should be used by entities inheriting this
     }
 
     /**
@@ -49,15 +52,15 @@ abstract class SkyblockEntity {
         getEquipment(e.equipment)
 
         // set attributes
-        val nbt = NBTEntity(e)
-        val comp = nbt.addCompound("skyblockData")
-        comp.setDouble("health", health)
-        comp.setDouble("damage", damage)
-        comp.setDouble("defense", defense)
-        val edata = comp.addCompound("entityData")
-        edata.setInteger("level", level)
-        edata.setBoolean("dropLoot", dropsOwnLoot())
-        edata.setString("name", name)
+        val cont = e.persistentDataContainer
+        cont.set(Key.namespaced(RefinedAPI.getInstance(), "hp"), PersistentDataType.DOUBLE, health)
+        cont.set(Key.namespaced(RefinedAPI.getInstance(), "damage"), PersistentDataType.DOUBLE, damage)
+        cont.set(Key.namespaced(RefinedAPI.getInstance(), "defense"), PersistentDataType.DOUBLE, defense)
+        cont.set(Key.namespaced(RefinedAPI.getInstance(), "level"), PersistentDataType.INTEGER, level)
+        if(dropsOwnLoot())
+            cont.set(Key.namespaced(RefinedAPI.getInstance(), "dropLoot"), PersistentDataType.BYTE, 0.toByte())
+        cont.set(Key.namespaced(RefinedAPI.getInstance(), "id"), PersistentDataType.STRING, id)
+
         // set display name
         e.isCustomNameVisible = true
         e.customName(

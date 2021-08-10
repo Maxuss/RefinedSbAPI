@@ -2,6 +2,7 @@ package space.maxus.refsb.api.items
 
 import de.tr7zw.changeme.nbtapi.NBTItem
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.apache.commons.lang.StringUtils.capitalize
 import org.bukkit.ChatColor
@@ -33,7 +34,9 @@ abstract class SkyblockItem : SkyblockFeature {
     /**
      * Called after initializing base of item
      */
-    open fun postInit(base: ItemStack) { }
+    open fun postInit(base: ItemStack) {
+        // Should be used by class inheriting this
+    }
 
     private lateinit var item : ItemStack
 
@@ -63,12 +66,47 @@ abstract class SkyblockItem : SkyblockFeature {
             stats.javaClass,
             ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get")
         )
+
+        operateGetters(getters, stats, lore)
+
+        if (abils.isNotEmpty()) {
+            lore.add(" ")
+            for (a in abils) {
+                lore.addAll(a.generate().map { str -> str ?: "" })
+                if (abils.indexOf(a) != abils.size - 1) {
+                    lore.add(" ")
+                }
+            }
+        }
+        if (t.isReforgeable) {
+            lore.add(" ")
+            lore.add(ChatColor.DARK_GRAY.toString() + "This item can be reforged!")
+        }
+        lore.add(rar.displayColor.toString() + "" + ChatColor.BOLD + rar.unformattedName + " " + t.display)
+        //#endregion lore
+        m.lore(lore.map {
+            s: String -> LegacyComponentSerializer.legacySection().deserialize(s).decoration(TextDecoration.ITALIC, false)
+        })
+        ItemHelper.hideAllFlags(m)
+        if (getConfig().glint) ItemHelper.applyGlint(m)
+
+        m.isUnbreakable = true
+        item.itemMeta = m
+
+        this.item = stats.applyStats(addRarity(addSkyblockTag(item), rar.index))
+        // finish the initialization by calling postInit
+        postInit(item)
+
+        return this.item
+    }
+
+    private fun operateGetters(getters: Set<Method>, stats: ItemStats, lore: MutableList<String>) {
         val d: HashMap<Int, Method> = HashMap()
         getters.forEach(Consumer {
                 get: Method ->
-                    val a: StatPosition = get.getAnnotation(StatPosition::class.java)
-                    val v: Int = a.pos
-                    d[v] = get
+            val a: StatPosition = get.getAnnotation(StatPosition::class.java)
+            val v: Int = a.pos
+            d[v] = get
         })
         val nd: TreeMap<Int, Method> = TreeMap<Int, Method>(d)
         for (i in getters.indices) {
@@ -90,35 +128,6 @@ abstract class SkyblockItem : SkyblockFeature {
                 RefinedAPI.getInstance().logger.severe("Could not set stats to object! ${e.stackTrace}")
             }
         }
-        if (abils.isNotEmpty()) {
-            lore.add(" ")
-            for (a in abils) {
-                lore.addAll(a.generate().map { str -> str ?: "" })
-                if (abils.indexOf(a) != abils.size - 1) {
-                    lore.add(" ")
-                }
-            }
-        }
-        if (t.isReforgeable) {
-            lore.add(" ")
-            lore.add(ChatColor.DARK_GRAY.toString() + "This item can be reforged!")
-        }
-        lore.add(rar.displayColor.toString() + "" + ChatColor.BOLD + rar.unformattedName + " " + t.display)
-        //#endregion lore
-        m.lore(lore.map {
-            s: String -> LegacyComponentSerializer.legacySection().deserialize(s)
-        })
-        ItemHelper.hideAllFlags(m)
-        if (getConfig().glint) ItemHelper.applyGlint(m)
-
-        m.isUnbreakable = true
-        item.itemMeta = m
-
-        this.item = addRarity(addSkyblockTag(item), rar.index)
-        // finish the initialization by calling postInit
-        postInit(item)
-
-        return item
     }
 
     /**
