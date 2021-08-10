@@ -3,11 +3,12 @@ package space.maxus.refsb.api
 import org.apache.commons.lang.Validate
 import org.bukkit.NamespacedKey
 import org.jetbrains.annotations.NotNull
+import java.util.function.Predicate
 
 /**
  * This interface is used for creating keys, used for identification in Skyblock plugins
  */
-interface Key {
+interface Key : Cloneable, Predicate<Key> {
     /**
      * The namespace part of the key
      */
@@ -33,6 +34,14 @@ interface Key {
 
     operator fun plus(other: String) : String {
         return this.full+other
+    }
+
+    override fun test(t: Key): Boolean {
+        return t == this || t.full == full || (t.namespace == namespace && t.key == key)
+    }
+
+    public override fun clone(): Key {
+        return fromString(this.full)
     }
 
     companion object {

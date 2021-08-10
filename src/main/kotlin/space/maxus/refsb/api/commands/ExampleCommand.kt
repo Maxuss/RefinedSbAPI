@@ -8,7 +8,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 @CommandInfo(name = "example", playerOnly = true)
-class ExampleCommand : ChatCommand() {
+internal class ExampleCommand : ChatCommand() {
     override fun execute(player: Player, args: Array<out String>): Boolean {
         val it = player.inventory.itemInMainHand
         if(it.type == Material.AIR) {

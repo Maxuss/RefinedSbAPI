@@ -5,6 +5,9 @@ import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.NotNull
 import space.maxus.refsb.api.Key
 
+/**
+ * This class is an implementation of Recipe interface
+ */
 class RefinedRecipe internal constructor(override val key: Key, override var result: ItemStack) : Recipe {
     override var choiceMap: MutableMap<Char?, RecipeChoice<*>?> = HashMap()
     override var rows: Array<String?> = emptyArray()

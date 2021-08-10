@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull
 import space.maxus.refsb.api.Key
 
 /**
- * This class is used to create custom Skyblock Recipes
+ * This interface is used to create custom Skyblock Recipes
  */
 interface Recipe {
     val key: Key

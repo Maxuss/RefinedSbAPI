@@ -1,6 +1,7 @@
 package space.maxus.refsb.api
 
 import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import space.maxus.refsb.RefinedAPI
 import space.maxus.refsb.api.commands.ChatCommand
@@ -22,7 +23,7 @@ abstract class SkyblockPlugin : JavaPlugin() {
     /**
      * All items that should be registered inside your plugin
      */
-    var items : ObjectMap<SkyblockItem> = SkyblockItemMap()
+    var items : ObjectMap<ItemStack> = SkyblockItemMap()
 
     /**
      * All entities that should be registered inside your plugin

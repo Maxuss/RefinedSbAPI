@@ -25,13 +25,23 @@ abstract class SkyblockEntity {
     abstract val level: Int
     abstract val id: String
 
+    /**
+     * This function is called after initializng base entity
+     */
     open fun postInit(entity: LivingEntity?, base: Entity?) {
 
     }
+
+    /**
+     * Whether the entity will drop loot
+     */
     protected open fun dropsOwnLoot(): Boolean {
         return false
     }
 
+    /**
+     * Generates the entity into Bukkit's entity
+     */
     fun generate(en: Entity): Entity {
         val e = en.world.spawnEntity(getLocation(en), type) as LivingEntity
 

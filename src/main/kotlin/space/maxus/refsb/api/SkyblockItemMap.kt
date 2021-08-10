@@ -1,8 +1,8 @@
 package space.maxus.refsb.api
 
-import space.maxus.refsb.api.items.SkyblockItem
+import org.bukkit.inventory.ItemStack
 
 /**
  * Implementation of Abstract object map for storing skyblock items for your plugin
  */
-class SkyblockItemMap : AbstractObjectMap<SkyblockItem>()
+class SkyblockItemMap : AbstractObjectMap<ItemStack>()
