@@ -6,7 +6,19 @@
 
     <groupId>space.maxus.refsb</groupId>
     <artifactId>RefinedAPI</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
+
+    <organization>
+        <name>Maxuss</name>
+        <url>https://github.com/Maxuss/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -103,7 +115,7 @@
         <!-- Paper -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
-            <artifactId>paper</artifactId>
+            <artifactId>paper-api</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

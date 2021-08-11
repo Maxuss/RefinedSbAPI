@@ -1,9 +1,6 @@
 package space.maxus.refsb.util;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.server.level.EntityPlayer;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -22,21 +19,5 @@ public class PlayerHelper {
         player.sendActionBar(LegacyComponentSerializer
                 .legacyAmpersand()
                 .deserialize(legacy));
-    }
-
-    /**
-     * Gets NMS player from vanilla player
-     */
-    public static EntityPlayer getNMSPlayer(Player player) {
-            return ((CraftPlayer) player).getHandle();
-    }
-
-    /**
-     * Sends a packet to player's connections
-     * @param player NMS player
-     * @param packet packet to be sent
-     */
-    public static void sendPacket(EntityPlayer player, Packet<?> packet) {
-        player.b.sendPacket(packet);
     }
 }
