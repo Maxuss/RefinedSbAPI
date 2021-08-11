@@ -8,7 +8,6 @@ import space.maxus.refsb.api.commands.ChatCommand
 import space.maxus.refsb.api.commands.CommandRegisterer
 import space.maxus.refsb.api.craft.RefinedRecipeManager
 import space.maxus.refsb.api.entities.SkyblockEntity
-import space.maxus.refsb.api.items.SkyblockItem
 import java.util.logging.Logger
 
 /**

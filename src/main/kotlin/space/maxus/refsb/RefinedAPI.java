@@ -10,8 +10,6 @@ import space.maxus.refsb.api.listeners.DamageListener;
 import space.maxus.refsb.api.listeners.InteractListener;
 import space.maxus.refsb.api.listeners.InventoryListener;
 
-import java.util.Objects;
-
 /**
  * The API for Refined SB
  */

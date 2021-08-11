@@ -11,7 +11,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import space.maxus.refsb.RefinedAPI
 import space.maxus.refsb.api.SkyblockPlugin
-import space.maxus.refsb.api.craft.*
+import space.maxus.refsb.api.craft.KeyedChoice
+import space.maxus.refsb.api.craft.Recipe
+import space.maxus.refsb.api.craft.RecipeChoice
 import space.maxus.refsb.util.TextUtils
 
 class InventoryListener : Listener {

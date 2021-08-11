@@ -1,6 +1,5 @@
 package space.maxus.refsb.api.craft
 
-import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import space.maxus.refsb.api.Key
 import java.util.function.Predicate

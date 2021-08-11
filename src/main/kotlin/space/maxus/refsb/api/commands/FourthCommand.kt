@@ -2,7 +2,6 @@ package space.maxus.refsb.api.commands
 
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
-import space.maxus.refsb.api.SkyblockPlugin
 import space.maxus.refsb.api.craft.CraftingInventory
 
 @CommandInfo(name = "fourth", playerOnly = true)

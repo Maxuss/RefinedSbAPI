@@ -5,9 +5,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import space.maxus.refsb.api.SkyblockPlugin
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
