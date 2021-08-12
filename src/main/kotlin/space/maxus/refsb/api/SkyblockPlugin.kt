@@ -37,18 +37,21 @@ abstract class SkyblockPlugin : JavaPlugin() {
     /**
      * A recipe manager for work with recipes
      */
-    val recipeManager: RefinedRecipeManager = RefinedRecipeManager(this, RefinedAPI.getInstance())
+    lateinit var recipeManager: RefinedRecipeManager
 
     private val rsbLogger: Logger = Logger.getLogger("RSB API")
 
     final override fun onEnable() {
+        recipeManager = RefinedRecipeManager(this, RefinedAPI.getInstance())
         enable()
         CommandRegisterer(this)
         rsbLogger.info("Enabled '$name' Skyblock Plugin!")
     }
 
     final override fun onDisable() {
+
         disable()
+        recipeManager.unregisterAll()
         rsbLogger.info("Disabled '$name' Skyblock Plugin!")
     }
 

@@ -2,6 +2,7 @@ package space.maxus.refsb.api.craft
 
 import org.apache.commons.lang.Validate
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.ShapedRecipe
 import org.jetbrains.annotations.NotNull
 import space.maxus.refsb.api.Key
 
@@ -38,6 +39,10 @@ class RefinedRecipe internal constructor(override val key: Key, override var res
         }
 
         this.rows = arrayOfNulls(shape.size)
+
+        for (i in shape.indices) {
+            this.rows[i] = shape[i]
+        }
 
         val newIngredients: HashMap<Char?, RecipeChoice<*>?> = HashMap()
         val var14: Array<String> = shape

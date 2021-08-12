@@ -32,6 +32,13 @@ class RefinedRecipeManager(plugin: SkyblockPlugin, api: RefinedAPI) {
         return RefinedRecipe(key, result)
     }
 
+    /**
+     * Unregisters all recipes from this plugin!
+     */
+    fun unregisterAll() {
+        registeredRecipes.clear()
+    }
+
     private fun checkRecipe(key: Key) : Boolean {
         return registeredRecipes.containsKey(key)
     }

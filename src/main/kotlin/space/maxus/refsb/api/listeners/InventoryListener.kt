@@ -53,10 +53,8 @@ class InventoryListener : Listener {
 
             for(plugin in Bukkit.getPluginManager().plugins) {
                 val depends = plugin.description.depend
-                logger.info("Found a plugin "+plugin.name+", checking it's dependencies...")
                 if(depends.contains("RefinedSkyblockAPI")) {
                     val sb = plugin as SkyblockPlugin
-                    logger.info("Plugin "+sb.name+" is Skyblock Plugin!")
                     recipes.addAll(sb.recipeManager.registeredRecipes.values)
                 }
             }
@@ -68,16 +66,16 @@ class InventoryListener : Listener {
             )
 
             for(recipe in recipes) {
-                logger.info("Proccessing recipe for item ${TextUtils.toLegacy(recipe.result.displayName())}")
                 val matrix = recipe.rows
                 val choices = recipe.choiceMap
                 val charray : MutableList<MutableList<Char>> = mutableListOf()
 
                 val choiceArray: MutableList<MutableList<RecipeChoice<*>?>?> = arrayOfNulls<MutableList<RecipeChoice<*>?>>(3).toMutableList()
-                for(row in matrix) {
-                    if(row == null) return
-                    val index = matrix.indexOf(row)
+                logger.info(matrix.toString())
 
+                for(row in matrix) {
+                    if(row == null) continue
+                    val index = matrix.indexOf(row)
                     charray.add(index, row.toCharArray().asList().toMutableList())
                 }
 
@@ -85,9 +83,7 @@ class InventoryListener : Listener {
                     val ind = charray.indexOf(char)
                     val tmp = mutableListOf<RecipeChoice<*>?>()
                     for(ch in char) {
-                        val x = char.indexOf(ch)
-                        logger.info("Current choice: ${choices[ch]}")
-                        tmp[x] = choices[ch]
+                        tmp.add(choices[ch])
                     }
                     choiceArray[ind] = tmp
                 }
@@ -105,29 +101,27 @@ class InventoryListener : Listener {
                     val choiceRow = choiceArray[index]
                     for(itemc in row) {
                         val i = row.indexOf(itemc)
-                        matches[index][i] = false
+                        matches[index].add(i, false)
                         val choice = choiceRow?.get(i) ?: continue
                         if(choice is KeyedChoice) {
                             val key = choice.key
-                            logger.info("Choice is keyed! Key: ${key.full}")
                             val id = key.key.uppercase()
+                            if(itemc == null || itemc.type.isEmpty) continue
                             val nbt = NBTItem(itemc)
                             if(!nbt.hasKey("skyblockData")) continue
-                            logger.info("Current item has skyblock id!")
                             val sbid = nbt.getCompound("skyblockData").getString("id")
-                            logger.info("Similar? "+(sbid.uppercase()==id))
                             matches[index][i] = sbid.uppercase() == id
                         } else {
-                            logger.info("Choice is item related!")
-                            val comparable = choice.getItem()
-                            logger.info("Similar? "+ comparable.isSimilar(itemc))
-                            matches[index][i] = comparable.isSimilar(itemc)
+                            val comparable = choice.getItem().clone()
+                            val zero = itemc?.clone()
+                            zero?.amount = 1
+                            comparable.amount = 1
+                            matches[index][i] = comparable.isSimilar(zero)
                         }
                     }
                 }
 
                 if(matches.all { bool -> bool.all { boole -> boole == true } }) {
-                    logger.info("Total match!")
                     val result = recipe.result
                     inv.setItem(23, result)
                     return
