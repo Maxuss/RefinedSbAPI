@@ -2,7 +2,6 @@ package space.maxus.refsb.api.craft
 
 import org.apache.commons.lang.Validate
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.ShapedRecipe
 import org.jetbrains.annotations.NotNull
 import space.maxus.refsb.api.Key
 
